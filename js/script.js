@@ -38,18 +38,22 @@ let choicesEL = document.querySelector(".choices");
 let answerEL = document.querySelectorAll(".answer-button");
 let startEL = document.querySelector(".start-button");
 
-console.log(answerEL);
-console.log(timeEL);
+
 
 
 // Create variables as needed
 let answer = "";
 let currentQuestion = 0;
+let questionsLeft = quizContent.length;
 let timeLeft = 60;
 
 // Variables for Stats
 let correct = 0;
 let incorrect = 0;
+
+// pre loading html elements
+
+timeEL.textContent = `TIME: ${timeLeft}s\nQUESTIONS LEFT: ${questionsLeft}`;
 
 
 
@@ -64,9 +68,11 @@ let loadQuizContent = () => {
     }
     currentQuestion++;
 
+
 }
 
 let loadQuizScreen = () => {
+    timerFunction();
     startEL.setAttribute('style', 'display: none');
     questionEL.textContent = "";
     discriptionEL.textContent = "";
@@ -74,7 +80,17 @@ let loadQuizScreen = () => {
     loadQuizContent();
 }
 
-let loadSaveScoreScreen = () => {
+let loadSaveScoreScreen = (reasonForQuizEnd) => {
+    // hide and reveal needed elements
+    timeEL.setAttribute('style', 'display: none');
+    discriptionEL.setAttribute('style', 'display: block');
+    choicesEL.setAttribute('style', 'display: none');
+
+
+    questionEL.textContent = `${reasonForQuizEnd}\nAll Done!!`;
+
+
+    discriptionEL.textContent = `Your final score is ${correct}`;
 
 }
 
@@ -96,16 +112,18 @@ let choiceFunction = (event) => {
     }
     else{
         incorrect++;
+        timeLeft = timeLeft - 10;
         console.log("WRONG: " + incorrect);
 
     }
     
     // if there are no more questions end the quiz early
     if(currentQuestion == quizContent.length){
-        console.log("NO MORE QUESTIONS");
-        //loadScoreScreen();
+        questionsLeft--;
+        loadSaveScoreScreen("No More Questions");
     }
-    else {
+    else { 
+        questionsLeft--;
         loadQuizContent();
     }
 }
@@ -127,14 +145,22 @@ let timerFunction = () => {
 
     let timeInterval = setInterval(function(){
         timeLeft--;
-        timeEL.textContent = `TIME: ${timeLeft}s`;
+        timeEL.textContent = `TIME: ${timeLeft}s\nQUESTIONS LEFT: ${questionsLeft}`;
 
-        if(timeLeft === 0){
-            timeEL.textContent = "TIME: 60s";
+        if(timeLeft < 1){
+            timeLeft = 60;
+            questionsLeft = quizContent.length;
+            timeEL.textContent = `TIME: ${timeLeft}\nQUESTIONS LEFT: ${questionsLeft}`;
             clearInterval(timeInterval);
+            loadSaveScoreScreen("Out Of Time");
         }
-    },1000)
+    },1000);
+}
+
+let startQuiz = () => {
+    loadHomeScreen();
+
 }
 
 
-loadHomeScreen();
+startQuiz();
