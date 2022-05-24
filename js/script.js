@@ -1,3 +1,9 @@
+// TO DO: HIDE THE FORM INPUT AND FINISH ITS HTML
+
+
+
+
+
 // will put the objects into an array to randomly select
 let quizContent = [ 
     
@@ -25,7 +31,18 @@ let quizContent = [
         choices: ["attachEvent", "insertEventListener", "eventListener", "addEventListener"]
     },
 
+    {
+        question: "what method lets you attach an event listener to a element?",
+        answer: "addEventListener",
+        choices: ["attachEvent", "insertEventListener", "eventListener", "addEventListener"]
+    },
+
 ];
+
+let scoreObject = {
+    name: '',
+    score: 0
+};
 
 
 
@@ -39,6 +56,14 @@ let answerEL = document.querySelectorAll(".answer-button");
 let startEL = document.querySelector(".start-button");
 
 
+// Form Elements
+let scoreFormEL = document.querySelector(".score-form");
+let inputScoreEL = document.querySelector(".input-score");
+let submitBtnEL = document.querySelector(".submit-score-btn");
+
+let highScoresEL = document.querySelector(".high-scores");
+
+
 
 
 // Create variables as needed
@@ -46,6 +71,7 @@ let answer = "";
 let currentQuestion = 0;
 let questionsLeft = quizContent.length;
 let timeLeft = 60;
+let timeInterval;
 
 // Variables for Stats
 let correct = 0;
@@ -58,7 +84,6 @@ timeEL.textContent = `TIME: ${timeLeft}s\nQUESTIONS LEFT: ${questionsLeft}`;
 
 
 // PAGE LOADING FUNCTIONS
-
 let loadQuizContent = () => {
     let currentContent = quizContent[currentQuestion];
     questionEL.textContent = currentContent.question;
@@ -85,6 +110,7 @@ let loadSaveScoreScreen = (reasonForQuizEnd) => {
     timeEL.setAttribute('style', 'display: none');
     discriptionEL.setAttribute('style', 'display: block');
     choicesEL.setAttribute('style', 'display: none');
+    scoreFormEL.setAttribute('style', 'display: block');
 
 
     questionEL.textContent = `${reasonForQuizEnd}\nAll Done!!`;
@@ -95,6 +121,10 @@ let loadSaveScoreScreen = (reasonForQuizEnd) => {
 }
 
 let loadScoreScreen = () => {
+    scoreFormEL.setAttribute('style', 'display: none');
+    highScoresEL.setAttribute('style', 'display: block');
+
+
 
 }
 
@@ -102,7 +132,10 @@ let loadHomeScreen = () => {
     questionEL.textContent = "CODING QUIZ CHALLENGE";
     discriptionEL.textContent = "welcome to the coding quiz challenge.\nIn this challenge you will be given 60 seconds to answer as many code questions as possible, but if you get one wrong you lose 10 seconds\nGOOD LUCK!";
     choicesEL.setAttribute("style", "display: none");
+    scoreFormEL.setAttribute("style", "display: none");
+    highScoresEL.setAttribute("style", "display: none");
 }
+
 
 // Event Listener Functions COME BACK AFTER LOAD FUNCTION
 let choiceFunction = (event) => {
@@ -120,6 +153,7 @@ let choiceFunction = (event) => {
     // if there are no more questions end the quiz early
     if(currentQuestion == quizContent.length){
         questionsLeft--;
+        clearInterval(timeInterval);
         loadSaveScoreScreen("No More Questions");
     }
     else { 
@@ -128,14 +162,25 @@ let choiceFunction = (event) => {
     }
 }
 
+let submitScore = (event) => {
+    event.preventDefault();
+    console.log(document.querySelector(".input-score").value);
+
+    
+
+    localStorage.setItem("score", `${correct} by ${document.querySelector(".input-score").value.toUpperCase()}`);
+    loadScoreScreen();
+
+}
+
+
 // Event Listeners
 answerEL.forEach(element => {
     element.addEventListener('click', choiceFunction);
 });
 
 startEL.addEventListener('click', loadQuizScreen);
-
-
+scoreFormEL.addEventListener('submit', submitScore)
 
 
 
@@ -143,7 +188,7 @@ startEL.addEventListener('click', loadQuizScreen);
 // Create a timer function
 let timerFunction = () => {
 
-    let timeInterval = setInterval(function(){
+    timeInterval = setInterval(function(){
         timeLeft--;
         timeEL.textContent = `TIME: ${timeLeft}s\nQUESTIONS LEFT: ${questionsLeft}`;
 
