@@ -40,9 +40,16 @@ let quizContent = [
 ];
 
 let scoreObject = {
-    name: '',
-    score: 0
+    scoresArray: [
+        {
+            name: '',
+            score: 0
+        }
+    ]
+    
 };
+
+
 
 
 
@@ -58,7 +65,7 @@ let startEL = document.querySelector(".start-button");
 
 // Form Elements
 let scoreFormEL = document.querySelector(".score-form");
-let inputScoreEL = document.querySelector(".input-score");
+let inputScoreEL = document.querySelector(".input-initials");
 let submitBtnEL = document.querySelector(".submit-score-btn");
 
 let highScoresEL = document.querySelector(".high-scores");
@@ -116,7 +123,7 @@ let loadSaveScoreScreen = (reasonForQuizEnd) => {
     questionEL.textContent = `${reasonForQuizEnd}\nAll Done!!`;
 
 
-    discriptionEL.textContent = `Your final score is ${correct}`;
+    discriptionEL.textContent = `Your final score is ${scoreObject.scoresArray[0].score}`;
 
 }
 
@@ -140,7 +147,7 @@ let loadHomeScreen = () => {
 // Event Listener Functions COME BACK AFTER LOAD FUNCTION
 let choiceFunction = (event) => {
     if(event.target.textContent == quizContent[currentQuestion-1].answer){
-        correct++;
+        scoreObject.scoresArray[0].score++;
         console.log("CORRECT: " + correct);
     }
     else{
@@ -162,13 +169,30 @@ let choiceFunction = (event) => {
     }
 }
 
+// create an array of objects that contain score data
+// pull from local storage, add new score, push to local storage
 let submitScore = (event) => {
     event.preventDefault();
-    console.log(document.querySelector(".input-score").value);
+    console.log(document.querySelector(".input-initials").value);
 
-    
+    scoreObject.scoresArray[0].name = document.querySelector(".input-initials").value;
 
-    localStorage.setItem("score", `${correct} by ${document.querySelector(".input-score").value.toUpperCase()}`);
+
+    console.log(scoreObject);
+
+    let savedScores = JSON.parse(localStorage.getItem("scores")).scoresArray;
+    if(savedScores){
+        for(let i = 0; i < savedScores.length; i++){
+            scoreObject.scoresArray.push(savedScores[i]);
+        }
+    }
+
+    localStorage.setItem("scores", JSON.stringify(scoreObject));
+
+    // pull from local storage
+
+
+
     loadScoreScreen();
 
 }
