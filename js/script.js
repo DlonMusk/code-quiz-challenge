@@ -1,8 +1,3 @@
-// TO DO: HIDE THE FORM INPUT AND FINISH ITS HTML
-
-
-
-
 
 // will put the objects into an array to randomly select
 let quizContent = [ 
@@ -115,11 +110,10 @@ let savedScores;
 
 // Variables for Stats
 let correct = 0;
-let incorrect = 0;
 
 // pre loading html elements
 
-timeEL.textContent = `TIME: ${timeLeft}s\nQUESTIONS LEFT: ${questionsLeft}`;
+timeEL.textContent = `TIME: ${timeLeft}s  QUESTIONS LEFT: ${questionsLeft}`;
 
 
 
@@ -198,18 +192,14 @@ let loadScoreScreen = () => {
             newLI.textContent = `${element.name} ${element.score}`
             highScoresEL.append(newLI);
         });
+    }
+    else if(scoreObject.scoresArray[0].name == ""){
+        
     }else {
         let newLI = document.createElement('li');
         newLI.textContent = `${scoreObject.scoresArray[0].name} ${scoreObject.scoresArray[0].score}`
         highScoresEL.append(newLI);
     }
-
-
-    console.log("SCORE OBJECT FROM SCORESCREEN");
-    console.log(scoreObject);
-    
-
-
 
 
 }
@@ -220,7 +210,7 @@ let loadHomeScreen = () => {
     timeLeft = 60;
     questionsLeft = quizContent.length;
     currentQuestion = 0;
-    timeEL.textContent = `TIME: ${timeLeft}\nQUESTIONS LEFT: ${questionsLeft}`;
+    timeEL.textContent = `TIME: ${timeLeft}s  QUESTIONS LEFT: ${questionsLeft}`;
     scoreObject.scoresArray = [{name: "", score: 0}];
 
     // turn on home screen elements
@@ -254,13 +244,9 @@ let loadHomeScreen = () => {
 let choiceFunction = (event) => {
     if(event.target.textContent == quizContent[currentQuestion-1].answer){
         scoreObject.scoresArray[0].score++;
-        console.log("CORRECT: " + correct);
     }
     else{
-        incorrect++;
         timeLeft = timeLeft - 10;
-        console.log("WRONG: " + incorrect);
-
     }
     
     // if there are no more questions end the quiz early
@@ -279,18 +265,13 @@ let choiceFunction = (event) => {
 // pull from local storage, add new score, push to local storage
 let submitScore = (event) => {
     event.preventDefault();
-    console.log(document.querySelector(".input-initials").value);
-
-    console.log("SCOREOBJECT: ");
-    console.log(scoreObject);
+    
 
     scoreObject.scoresArray[0].name = document.querySelector(".input-initials").value;
 
 
-
     savedScores = JSON.parse(localStorage.getItem("scores"));
-    console.log("SAVEDSCORES");
-    console.log(savedScores);
+
 
     if(savedScores){
         for(let i = 0; i < savedScores.scoresArray.length; i++){
@@ -299,11 +280,6 @@ let submitScore = (event) => {
     }
 
     localStorage.setItem("scores", JSON.stringify(scoreObject));
-
-    console.log("SCOREOBJECT: ");
-    console.log(scoreObject);
-    // pull from local storage
-
 
 
     loadScoreScreen();
@@ -339,15 +315,15 @@ highScoresBtn.addEventListener('click', loadScoreScreen);
 let timerFunction = () => {
 
     timeInterval = setInterval(function(){
-        timeLeft--;
-        timeEL.textContent = `TIME: ${timeLeft}s\nQUESTIONS LEFT: ${questionsLeft}`;
+        timeLeft-=0.1;
+        timeEL.textContent = `TIME: ${Math.trunc(timeLeft)}s  QUESTIONS LEFT: ${questionsLeft}`;
 
         if(timeLeft < 1){
-
             clearInterval(timeInterval);
+            timeEL.textContent = `TIME: 0s  QUESTIONS LEFT: ${questionsLeft}`;
             loadSaveScoreScreen("Out Of Time");
         }
-    },1000);
+    },100);
 }
 
 let startQuiz = () => {

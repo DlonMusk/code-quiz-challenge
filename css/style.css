@@ -19,6 +19,7 @@ body {
 
 .time {
     padding: 4vh 3vw;
+    background-color: rgba(255, 255, 255, 0.639);
 }
 
 .quiz-card {
@@ -38,6 +39,7 @@ body {
 .question {
     width: 70%;
     height: 8vh;
+    margin: 0 auto;
 }
 
 .discription {
@@ -63,16 +65,17 @@ body {
 .high-scores {
     height: 30vh;
     width: 32vw;
+    margin: 0 auto;
     overflow-y: scroll;
     background-color: white;
 }
 
 .high-scores > * {
-    margin: 3vh auto;
+    margin: 1vh auto;
     width: 30vw;
-    color: aqua;
-    background-color: rgb(79, 49, 26);
-    border: solid 1px pink;
+    color: rgb(255, 109, 133);
+    background-color: azure;
+    border: solid 3px pink;
 
 }
 
