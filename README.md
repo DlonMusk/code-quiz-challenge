@@ -20,4 +20,4 @@ In this Challenge we were tasked with building a timed coding quiz with multiple
 ![mock-up image high score page](./Assets/_C__Users_Dylan_Documents_School_Homework_Challenges_code-quiz-challenge_index.html%20(3).png)
 
 
-[**GITHUB PAGES LINK**]
+[**GITHUB PAGES LINK**](https://dlonmusk.github.io/code-quiz-challenge/)
