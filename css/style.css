@@ -128,7 +128,7 @@ li {
 
 /* Phone size screens */
 
-@media screen and (max-width: 500px){
+@media screen and (max-width: 550px){
     
     .quiz-card{
         width: 90vw;
