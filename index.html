@@ -4,12 +4,13 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./css/style.css">
     <title>CODE QUIZ</title>
 </head>
 <body>
     <section class="top-bar">
-        <button class="highscores">HIGHSCORES</button>
         <p class="time"></p>
+        <button class="high-scores-btn">HIGHSCORES</button>
     </section>
     
 
@@ -19,6 +20,8 @@
         <p class="discription"></p>
         <button class="start-button">START QUIZ</button>
         <ul class="high-scores"></ul>
+        <button class="go-back-btn">Go Back</button>
+        <button class="clear-scores">Clear Scores</button>
         <ul class="choices">
             <li class="answer"><button class="answer-button"></button></li>
             <li class="answer"><button class="answer-button"></button></li>
@@ -26,7 +29,7 @@
             <li class="answer"><button class="answer-button"></button></li>
         </ul>
         <form action="" method="get" class="score-form">
-            <label for="log-score">Enter Initials: </label>
+            <label class="sub-label" for="log-score">Enter Initials: </label>
             <input class="input-initials" type="text" name="log-score">
             <button class="submit-score-btn">Submit</button>
         </form>
