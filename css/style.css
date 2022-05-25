@@ -126,3 +126,62 @@ li {
     color: pink;
 }
 
+/* Phone size screens */
+
+@media screen and (max-width: 400px){
+    
+    .quiz-card{
+        width: 90vw;
+        height: 80vh;
+    }
+
+    .start-button {
+        width: 85vw;
+        height: 10vh;
+    }
+
+    .answer-button {
+        width: 65vw;
+        height: 8vh;
+    }
+
+    .score-form {
+        font-size: 20px;
+        width: 80vw;
+    }
+
+    input {
+        height: 5vh;
+    }
+
+    .submit-score-btn {
+        height: 4vh;
+    }
+
+    .high-scores {
+        width: 80vw;
+        height: 70vh;
+    }
+    .high-scores > * {
+        width: 60vw;
+        height: 3vh;
+    }
+
+    .go-back-btn{
+        display: inline-block;
+        margin: 0 auto;
+        margin-top: 50px;
+        width: 60vw;
+        height: 3vh;
+        background-color: rgb(179, 255, 255);
+    }
+    .clear-scores{
+        display:inline-block;
+        margin: 0 auto;
+        width: 60vw;
+        height: 3vh;
+        background-color: rgb(179, 255, 255);
+    }
+
+}
+
